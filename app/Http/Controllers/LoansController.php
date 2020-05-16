@@ -16,7 +16,14 @@ class LoansController extends Controller
     public function index(Request $request)
     {
         $loans = Loan::where('user_id', Auth::user()->id)->get();
-        return view('loans.index', [ 'loans' => $loans ]);
+
+        $summary = [
+            'total_balance' => $loans->sum('current_balance'),
+            'average_rate' => $loans->avg('interest_rate'),
+            'monthly_payment' => $loans->sum('min_payment')
+        ];
+
+        return view('loans.index', [ 'loans' => $loans, 'summary' => $summary ]);
     }
 
     public function create()

@@ -23,7 +23,9 @@
                         <div class="form-group row">
                           <label for="starting_balance" class="col-sm-2 col-form-label">Balance</label>
                           <div class="col-sm-4">
-                            <input type="number" 
+                            <input type="number"
+                                   min="1" 
+                                   step="any"                            
                                    name="starting_balance" 
                                    class="form-control @error('starting_balance') is-invalid @enderror" 
                                    placeholder="Initial Balance"
@@ -33,7 +35,9 @@
                         <div class="form-group row">
                           <label for="interest_rate" class="col-sm-2 col-form-label">Rate</label>
                           <div class="col-sm-4">
-                            <input type="number" 
+                            <input type="number"
+                                   min="1"
+                                   step="any"
                                    name="interest_rate" 
                                    class="form-control @error('interest_rate') is-invalid @enderror" 
                                    placeholder="Interest Rate"
@@ -43,7 +47,9 @@
                         <div class="form-group row">
                           <label for="min_payment" class="col-sm-2 col-form-label">Minimum Payment</label>
                           <div class="col-sm-4">
-                            <input type="number" 
+                            <input type="number"
+                                   min="1"
+                                   step="any"
                                    name="min_payment" 
                                    class="form-control @error('min_payment') is-invalid @enderror" 
                                    placeholder="Minimum Payment"

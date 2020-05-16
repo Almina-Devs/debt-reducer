@@ -8,6 +8,11 @@ use App\Models\Loan;
 
 class LoansController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index(Request $request)
     {
         $loans = Loan::where('user_id', Auth::user()->id)->get();

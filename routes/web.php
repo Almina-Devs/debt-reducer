@@ -13,14 +13,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// PULIC
 Route::get('/', function () {
     return view('welcome');
 });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['middleware' => 'auth'], function () {
 
-Route::get('/loans', 'LoansController@index')->name('loans');
-Route::get('/loans/create', 'LoansController@create');
-Route::post('/loans', 'LoansController@store');
+    // DASHBOARD
+    Route::get('/home', 'HomeController@index')->name('home');
+
+    // LOANS
+    Route::get('/loans', 'LoansController@index')->name('loans');
+    Route::get('/loans/create', 'LoansController@create');
+    Route::post('/loans', 'LoansController@store');
+
+});
+

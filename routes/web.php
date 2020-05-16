@@ -28,8 +28,10 @@ Route::group(['middleware' => 'auth'], function () {
     // LOANS
     Route::get('/loans', 'LoansController@index')->name('loans');
     Route::get('/loans/create', 'LoansController@create');
+    Route::get('/loans/edit/{id}', 'LoansController@edit');
     Route::post('/loans', 'LoansController@store');
-    Route::put('/loans', 'LoansController@update');
+    Route::put('/loans/{id}', 'LoansController@update');
+    Route::get('/loans/delete/{id}', 'LoansController@delete');
 
 });
 

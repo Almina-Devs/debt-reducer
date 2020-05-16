@@ -29,15 +29,23 @@
                                         <td>${{ number_format($loan->current_balance, 2, '.', ',') }}</td>
                                         <td>{{ number_format($loan->interest_rate, 2, '.', ',') }}%</td>
                                         <td>${{ number_format($loan->min_payment, 2, '.', ',') }}</td>
-                                        <td><i class="fas fa-pencil-alt"></i></td>
-                                        <td><i class="fas fa-trash-alt"></i></td>
+                                        <td>
+                                            <a href="/loans/edit/{{ $loan->id }}">
+                                                <i class="fas fa-pencil-alt"></i>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="/loans/delete/{{ $loan->id }}" onclick="return confirm('Are you sure?')" >
+                                                <i class="fas fa-trash-alt"></i>
+                                            </a>
+                                        </td>
                                     </tr>
                                 @endforeach
 
                                     <tr>
                                         <td></td>
-                                        <td></td>
-                                        <td>${{ number_format($summary['total_balance'], 2, '.', ',') }}</td>
+                                        <td>${{ number_format($summary['total_begining_balance'], 2, '.', ',') }}</td>
+                                        <td>${{ number_format($summary['total_current_balance'], 2, '.', ',') }}</td>
                                         <td>{{ number_format($summary['average_rate'], 2, '.', ',') }}%</td>
                                         <td>${{ number_format($summary['monthly_payment'], 2, '.', ',') }}</td>
                                         <td></td>
@@ -53,7 +61,7 @@
                             <button type="button" class="btn btn-primary">New Loan</button>
                         </a>
                     </div>
-                    
+
                 </div>
             </div>
         </div>

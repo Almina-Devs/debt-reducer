@@ -18,7 +18,8 @@ class LoansController extends Controller
         $loans = Loan::where('user_id', Auth::user()->id)->get();
 
         $summary = [
-            'total_balance' => $loans->sum('current_balance'),
+            'total_begining_balance' => $loans->sum('starting_balance'),
+            'total_current_balance' => $loans->sum('current_balance'),
             'average_rate' => $loans->avg('interest_rate'),
             'monthly_payment' => $loans->sum('min_payment')
         ];
@@ -51,5 +52,48 @@ class LoansController extends Controller
         ]);
 
         return redirect()->route('loans');
+    }
+
+    public function edit(Request $request, $id)
+    {
+        $loan = Loan::where('user_id', Auth::user()->id)
+                    ->where('id', $id)   
+                    ->first();
+
+        return view('loans.edit', [ 'loan' => $loan ]);                     
+    }
+
+    public function update(Request $request, $id)
+    {
+
+        $this->validate($request, [
+            'name' => 'required|string|max:255',
+            'starting_balance' => 'required|string',
+            'interest_rate' => 'required',
+            'min_payment' => 'required'
+        ]);
+
+        $loan = Loan::where('user_id', Auth::user()->id)
+                    ->where('id', $id)
+                    ->first();
+
+        $loan->name = $request->input('name');
+        $loan->starting_balance = $request->input('starting_balance');
+        $loan->current_balance = $request->input('starting_balance');
+        $loan->interest_rate = $request->input('interest_rate');
+        $loan->min_payment = $request->input('min_payment');
+        $loan->save();
+
+        return redirect()->route('loans');
+
+    }
+
+    public function delete(Request $request, $id)
+    {
+        $loan = Loan::where('user_id', Auth::user()->id)
+                    ->where('id', $id)
+                    ->delete();
+
+        return redirect()->route('loans');                    
     }
 }

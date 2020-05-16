@@ -21,6 +21,6 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/loans', 'LoansController@index');
+Route::get('/loans', 'LoansController@index')->name('loans');
 Route::get('/loans/create', 'LoansController@create');
 Route::post('/loans', 'LoansController@store');

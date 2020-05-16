@@ -24,14 +24,20 @@ class LoansController extends Controller
         $this->validate($request, [
             'name' => 'required|string|max:255',
             'starting_balance' => 'required|string',
+            'interest_rate' => 'required',
+            'min_payment' => 'required'
         ]);
 
         Loan::create([
             'name' => $request->input('name'),
             'starting_balance' => $request->input('starting_balance'),
-            'current_balance' => $request->input('current_balance'),
+            'current_balance' => $request->input('starting_balance'),
             'interest_rate' => $request->input('interest_rate'),
-            'min_payment' => $request->input('interest_rate'),
+            'min_payment' => $request->input('min_payment'),
+            'fixed_payment' => 0,
+            'user_id' => Auth::user()->id
         ]);
+
+        return redirect()->route('loans');
     }
 }

@@ -33,5 +33,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/loans/{id}', 'LoansController@update');
     Route::get('/loans/delete/{id}', 'LoansController@delete');
 
+    // SCHEDULE
+    Route::get('/schedules', 'SchedulesController@index')->name('schedule');
+
 });
 

@@ -43,7 +43,7 @@
                                 @endforeach
 
                                     <tr>
-                                        <td></td>
+                                        <td>Totals:</td>
                                         <td>${{ number_format($summary['total_begining_balance'], 2, '.', ',') }}</td>
                                         <td>${{ number_format($summary['total_current_balance'], 2, '.', ',') }}</td>
                                         <td>{{ number_format($summary['average_rate'], 2, '.', ',') }}%</td>
@@ -54,14 +54,23 @@
 
                             </tbody>
                         </table>
+
+                        @if (session('status'))
+                            <div class="alert alert-success">
+                                {{ session('status') }}
+                            </div>
+                        @endif
                     </div>
 
                     <div style="padding-top: 20px">
                         <a href="/loans/create">
                             <button type="button" class="btn btn-primary">New Loan</button>
                         </a>
-                    </div>
 
+                        <a href="/schedules">
+                            <button type="button" class="btn btn-primary">See Payment Schedule</button>
+                        </a>                        
+                    </div>
                 </div>
             </div>
         </div>

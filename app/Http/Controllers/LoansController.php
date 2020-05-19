@@ -59,7 +59,7 @@ class LoansController extends Controller
         $loan = Loan::where('user_id', Auth::user()->id)
                     ->where('id', $id)   
                     ->first();
-
+        
         return view('loans.edit', [ 'loan' => $loan ]);                     
     }
 
@@ -84,7 +84,7 @@ class LoansController extends Controller
         $loan->min_payment = $request->input('min_payment');
         $loan->save();
 
-        return redirect()->route('loans');
+        return redirect()->route('loans')->with('status', $loan->name . ' updated!');
 
     }
 
@@ -92,8 +92,12 @@ class LoansController extends Controller
     {
         $loan = Loan::where('user_id', Auth::user()->id)
                     ->where('id', $id)
-                    ->delete();
+                    ->first();
 
-        return redirect()->route('loans');                    
+        $name = $loan->name;                    
+
+        $loan->delete();
+
+        return redirect()->route('loans')->with('status', $name . ' deleted!');                    
     }
 }

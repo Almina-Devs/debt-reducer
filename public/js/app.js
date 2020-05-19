@@ -49705,6 +49705,10 @@ var app = new Vue({
   el: '#app'
 });
 
+function testJS() {
+  console.log("oh hi marc");
+}
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -49839,8 +49843,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/marc/Documents/GitHub/debt-reducer/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/marc/Documents/GitHub/debt-reducer/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/marcmendoza/Documents/GitHub/debt-reducer/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/marcmendoza/Documents/GitHub/debt-reducer/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

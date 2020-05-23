@@ -38,10 +38,15 @@ class SchedulesController extends Controller
     {
         $loan = Loan::where('id', $loanId)->first();
         $ams = $this->calc->amortizationSchdule($loan->starting_balance, ($loan->interest_rate / 100));
+        $details = [
+            "totalNumberPayments" => count($ams)
+        ];
+
         return view('schedules.index', 
             [
                 'loan' => $loan,
-                'amortizationSchedule' => $ams
+                'amortizationSchedule' => $ams,
+                'details' => $details
             ]
         );                
     }

@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-10">
             <div class="card">
                 <div class="card-header">Loans</div>
 
@@ -17,6 +17,7 @@
                                 <th scope="col">Current Balance</th>
                                 <th scope="col">Interest Rate</th>
                                 <th scope="col">Min. Payment</th>
+                                <th scope="col"></th>
                                 <th scope="col">Edit</th>
                                 <th scope="col">Delete</th>
                                 </tr>
@@ -29,6 +30,11 @@
                                         <td>${{ number_format($loan->current_balance, 2, '.', ',') }}</td>
                                         <td>{{ number_format($loan->interest_rate, 2, '.', ',') }}%</td>
                                         <td>${{ number_format($loan->min_payment, 2, '.', ',') }}</td>
+                                        <td>
+                                            <a href="/schedules/{{ $loan->id }}">
+                                                <i class="far fa-calendar-alt"></i>
+                                            </a>
+                                        </td>                                        
                                         <td>
                                             <a href="/loans/edit/{{ $loan->id }}">
                                                 <i class="fas fa-pencil-alt"></i>
@@ -50,6 +56,7 @@
                                         <td>${{ number_format($summary['monthly_payment'], 2, '.', ',') }}</td>
                                         <td></td>
                                         <td></td>
+                                        <td></td>
                                     </tr>
 
                             </tbody>
@@ -66,10 +73,6 @@
                         <a href="/loans/create">
                             <button type="button" class="btn btn-primary">New Loan</button>
                         </a>
-
-                        <a href="/schedules">
-                            <button type="button" class="btn btn-primary">See Payment Schedule</button>
-                        </a>                        
                     </div>
                 </div>
             </div>

@@ -14,6 +14,9 @@
                         <div>
                             Total # of payments : {{ $details["totalNumberPayments"] }}
                         </div>
+                        <div>
+                            Payoff Date : {{ $details["payoffMonth"] }}
+                        </div>
                     </div>
                 </div>
             </div>

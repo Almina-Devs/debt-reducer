@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use Auth;
+use App\Models\PaydownSchedule;
 use Carbon\Carbon;
 
 class Calculator
@@ -83,5 +85,39 @@ class Calculator
         return ($amount * $interest) / 12 + ($amount * .01);
     }
 
+    public function paydownSchedule($loans)
+    {
+
+        $userId = Auth::user()->id;
+
+        foreach($loans as $loan) {
+
+            $amSchedule = $this->amortizationSchdule($loan->starting_balance, ($loan->interest_rate / 100));
+
+            $loanDataArray = [];
+
+            foreach ($amSchedule as $item) {
+                
+                $data = [
+                    'user_id' => $userId,
+                    'loan_id' => $loan->id,
+                    'payment' => $item['payment'],
+                    'balance' => $item['balance'],
+                    'payment_date' => '2020-01-01'
+                ];
+
+                array_push($loanDataArray, $data);
+
+            }
+                       
+            PaydownSchedule::insert($loanDataArray);
+        
+        }
+
+        $paydown = Paydown::where('user_id', $userId)->get();
+        
+        dd($paydown);
+
+    }
 }
 

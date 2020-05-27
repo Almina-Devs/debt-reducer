@@ -73,6 +73,12 @@
                         <a href="/loans/create">
                             <button type="button" class="btn btn-primary">New Loan</button>
                         </a>
+
+                        <a href="/schedules/paydown">
+                            <button type="button" class="btn btn-primary">See Paydown Schedule</button>
+                        </a>
+
+
                     </div>
                 </div>
             </div>

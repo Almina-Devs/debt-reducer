@@ -35,7 +35,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     // SCHEDULE
     Route::get('/schedules', 'SchedulesController@index')->name('schedule');
+    Route::get('/schedules/paydown' , 'SchedulesController@showPaydownSchedule');
     Route::get('/schedules/{loanId}', 'SchedulesController@show');
-
+    
 });
 

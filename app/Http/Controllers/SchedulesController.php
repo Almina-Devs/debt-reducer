@@ -49,7 +49,22 @@ class SchedulesController extends Controller
                 'amortizationSchedule' => $ams,
                 'details' => $details
             ]
-        );                
+        );
+    }
+
+    public function showPaydownSchedule(Request $request)
+    {
+
+        $loans = Loan::where('user_id', Auth::user()->id)->get();
+
+        $this->calc->paydownSchedule($loans);
+
+        return view('schedules.paydown',
+            [
+                'paydownSchedule' => []
+            ]
+        );
+
     }
     
 }

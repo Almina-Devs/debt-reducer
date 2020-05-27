@@ -109,14 +109,14 @@ class Calculator
                 array_push($loanDataArray, $data);
 
             }
-                       
+        
             PaydownSchedule::insert($loanDataArray);
         
         }
 
         $paydown = PaydownSchedule::where('user_id', $userId)->get();
         
-        dd($paydown);
+        return $paydown;
 
     }
 }

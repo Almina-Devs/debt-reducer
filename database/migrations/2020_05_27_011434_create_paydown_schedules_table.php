@@ -17,8 +17,8 @@ class CreatePaydownSchedulesTable extends Migration
             $table->id();
             $table->integer('user_id');
             $table->integer('loan_id');
-            $table->double('payment', 8, 2);
-            $table->double('balance', 8, 2);
+            $table->double('payment', 13, 2);
+            $table->double('balance', 13, 2);
             $table->date('payment_date');
             $table->tinyInteger('complete')->default(0);            
             $table->timestamps();

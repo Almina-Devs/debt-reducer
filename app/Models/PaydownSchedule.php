@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class PaydownSchedule extends Model
 {
-    //
+    protected $guarded = [];
 }

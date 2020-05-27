@@ -114,7 +114,7 @@ class Calculator
         
         }
 
-        $paydown = Paydown::where('user_id', $userId)->get();
+        $paydown = PaydownSchedule::where('user_id', $userId)->get();
         
         dd($paydown);
 

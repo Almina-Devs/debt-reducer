@@ -101,8 +101,8 @@ class Calculator
                 $data = [
                     'user_id' => $userId,
                     'loan_id' => $loan->id,
-                    'payment' => $item['payment'],
-                    'balance' => $item['balance'],
+                    'payment' => (double)$item['payment'],
+                    'balance' => (double)$item['balance'],
                     'payment_date' => '2020-01-01'
                 ];
 

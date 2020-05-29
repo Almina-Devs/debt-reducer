@@ -29,7 +29,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'your_heroku_mysql_connection'),
+    'default' => env('DB_CONNECTION', 'heroku_mysql_connection'),
 
     /*
     |--------------------------------------------------------------------------
@@ -77,7 +77,7 @@ return [
             ]) : [],
         ],
 
-        'your_heroku_mysql_connection' => array(
+        'heroku_mysql_connection' => array(
             'driver' => 'mysql',
             'host' => $host,
             'database' => $database,

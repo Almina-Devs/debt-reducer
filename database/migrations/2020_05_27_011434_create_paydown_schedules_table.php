@@ -21,8 +21,7 @@ class CreatePaydownSchedulesTable extends Migration
             $table->double('balance', 13, 2);
             $table->date('payment_date');
             $table->tinyInteger('complete')->default(0);            
-            $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamps();
         });
     }
 

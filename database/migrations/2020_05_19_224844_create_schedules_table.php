@@ -20,8 +20,7 @@ class CreateSchedulesTable extends Migration
             $table->double('payment', 8, 2);
             $table->double('balance', 8, 2);
             $table->date('payment_date');
-            $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamps();
         });
     }
 

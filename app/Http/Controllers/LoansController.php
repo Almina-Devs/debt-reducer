@@ -4,13 +4,16 @@ namespace App\Http\Controllers;
 
 use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use App\Models\Loan;
+use App\Services\Calculator;
 
 class LoansController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
+        $this->calc = new Calculator();
     }
 
     public function index(Request $request)
@@ -21,7 +24,8 @@ class LoansController extends Controller
             'total_begining_balance' => $loans->sum('starting_balance'),
             'total_current_balance' => $loans->sum('current_balance'),
             'average_rate' => $loans->avg('interest_rate'),
-            'monthly_payment' => $loans->sum('min_payment')
+            'monthly_payment' => $loans->sum('min_payment'),
+            'total_payments' => $this->calc->getTotalMonthlyPayments()
         ];
 
         return view('loans.index', [ 'loans' => $loans, 'summary' => $summary ]);
@@ -34,19 +38,31 @@ class LoansController extends Controller
 
     public function store(Request $request)
     {
-        $this->validate($request, [
+
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'starting_balance' => 'required|string',
             'interest_rate' => 'required',
-            'min_payment' => 'required'
+            'due_date' => 'required'
         ]);
+
+        if ($validator->fails()) {
+            return redirect('loans/create')
+                        ->withErrors($validator)
+                        ->withInput();
+        }        
+
+        $minPayment = $this->calc->getMinimumPayment(
+            $request->input('starting_balance'),
+            ($request->input('interest_rate') / 100)
+        );
 
         Loan::create([
             'name' => $request->input('name'),
             'starting_balance' => $request->input('starting_balance'),
             'current_balance' => $request->input('starting_balance'),
             'interest_rate' => $request->input('interest_rate'),
-            'min_payment' => $request->input('min_payment'),
+            'min_payment' => $minPayment,
             'fixed_payment' => 0,
             'user_id' => Auth::user()->id
         ]);

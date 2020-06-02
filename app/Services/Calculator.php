@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Auth;
+use App\Models\Loan;
 use App\Models\PaydownSchedule;
 use Carbon\Carbon;
 
@@ -43,7 +44,7 @@ class Calculator
             }
             
             $item = [
-                'month' => $startDate->month . '/' . $startDate->year,
+                'month' => $startDate,
                 'payment' => number_format($minPayment, 2, '.', ','),
                 'balance' => number_format($amount, 2, '.', ',')
             ];
@@ -98,6 +99,8 @@ class Calculator
 
             foreach ($amSchedule as $item) {
                 
+                dd($item);
+
                 $data = [
                     'user_id' => $userId,
                     'loan_id' => $loan->id,
@@ -118,6 +121,13 @@ class Calculator
         
         return $paydown;
 
+    }
+
+    public function getTotalMonthlyPayments()
+    {
+        $loans = Loan::where('user_id', Auth::user()->id)->get();
+
+        return $loans->sum('min_payment');
     }
 }
 

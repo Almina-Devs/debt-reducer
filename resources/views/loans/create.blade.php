@@ -17,6 +17,7 @@
                                    name="name" 
                                    class="form-control @error('name') is-invalid @enderror" 
                                    placeholder="Loan Nick Name"
+                                   value="{{ old('name') }}"
                             >
                           </div>
                         </div>
@@ -29,6 +30,7 @@
                                    name="starting_balance" 
                                    class="form-control @error('starting_balance') is-invalid @enderror" 
                                    placeholder="Initial Balance"
+                                   value="{{ old('starting_balance') }}"
                             >
                           </div>
                         </div>
@@ -41,28 +43,29 @@
                                    name="interest_rate" 
                                    class="form-control @error('interest_rate') is-invalid @enderror" 
                                    placeholder="Interest Rate"
+                                   value="{{ old('interest_rate') }}"
                             >
                           </div>
                         </div>
+
                         <div class="form-group row">
-                          <label for="min_payment" class="col-sm-2 col-form-label">Minimum Payment</label>
+                          <label for="due_date" class="col-sm-2 col-form-label">Due Date</label>
                           <div class="col-sm-4">
-                            <input type="number"
-                                   min="1"
-                                   step="any"
-                                   name="min_payment" 
-                                   class="form-control @error('min_payment') is-invalid @enderror" 
-                                   placeholder="Minimum Payment"
+                            <input type="date"
+                                   name="due_date" 
+                                   class="form-control @error('due_date') is-invalid @enderror" 
+                                   placeholder="Due Date"
+                                   value="{{ old('due_date') }}"
                             >
                           </div>
-                        </div>
+                        </div>                        
                         
                         <div class="form-group row">
                           <div class="col-sm-10">
                             <button type="submit" class="btn btn-primary">Add Loan</button>
                           </div>
                         </div>
-                      </form>                      
+                      </form>          
                 </div>
             </div>
         </div>

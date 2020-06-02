@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Auth;
 use App\Models\Loan;
+use App\Models\LoanPayment;
 use App\Models\PaydownSchedule;
 use Carbon\Carbon;
 
@@ -16,7 +17,7 @@ class Calculator
      * @param [type] $interest
      * @return void
      */
-    public function amortizationSchdule($amount, $interest)
+    public function amortizationSchdule($loanId, $amount, $interest)
     {
 
         $schdule = [];
@@ -44,14 +45,17 @@ class Calculator
             }
             
             $item = [
-                'month' => $startDate->format('F') . ' of ' . $startDate->year,
+                'loan_id' => $loanId,
                 'payment' => number_format($minPayment, 2, '.', ','),
+                'payment_date' => $startDate,
                 'balance' => number_format($amount, 2, '.', ',')
             ];
 
             array_push($schdule, $item);
 
         }
+
+        LoanPayment::insert($schdule);
 
         return $schdule;
 

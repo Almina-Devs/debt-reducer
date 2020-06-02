@@ -37,7 +37,7 @@ class SchedulesController extends Controller
     public function show(Request $request, $loanId)
     {
         $loan = Loan::where('id', $loanId)->first();
-        $ams = $this->calc->amortizationSchdule($loan->starting_balance, ($loan->interest_rate / 100));
+        $ams = $this->calc->amortizationSchdule($id, $loan->starting_balance, ($loan->interest_rate / 100));
         $details = [
             "totalNumberPayments" => count($ams),
             "payoffMonth" => $ams[count($ams)-1]["month"]

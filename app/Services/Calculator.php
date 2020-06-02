@@ -44,7 +44,7 @@ class Calculator
             }
             
             $item = [
-                'month' => $startDate,
+                'month' => $startDate->format('F') . ' of ' . $startDate->year,
                 'payment' => number_format($minPayment, 2, '.', ','),
                 'balance' => number_format($amount, 2, '.', ',')
             ];
@@ -86,6 +86,12 @@ class Calculator
         return ($amount * $interest) / 12 + ($amount * .01);
     }
 
+    /**
+     * Undocumented function
+     *
+     * @param [type] $loans
+     * @return void
+     */
     public function paydownSchedule($loans)
     {
 
@@ -98,8 +104,6 @@ class Calculator
             $loanDataArray = [];
 
             foreach ($amSchedule as $item) {
-                
-                dd($item);
 
                 $data = [
                     'user_id' => $userId,

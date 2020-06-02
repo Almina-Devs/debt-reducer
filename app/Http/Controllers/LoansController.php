@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Loan;
 use App\Services\Calculator;
+use Carbon\Carbon;
 
 class LoansController extends Controller
 {
@@ -57,6 +58,8 @@ class LoansController extends Controller
             ($request->input('interest_rate') / 100)
         );
 
+        $dueDate = Carbon::parse($request->input('interest_rate'));
+
         Loan::create([
             'name' => $request->input('name'),
             'starting_balance' => $request->input('starting_balance'),
@@ -64,6 +67,7 @@ class LoansController extends Controller
             'interest_rate' => $request->input('interest_rate'),
             'min_payment' => $minPayment,
             'fixed_payment' => 0,
+            'due_date' => $dueDate,
             'user_id' => Auth::user()->id
         ]);
 

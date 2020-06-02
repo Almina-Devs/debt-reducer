@@ -16,11 +16,11 @@ class CreateLoansTable extends Migration
         Schema::create('loans', function (Blueprint $table) {
             $table->id();
             $table->string('name', 255);
-            $table->double('starting_balance', 8, 2);
-            $table->double('current_balance', 8, 2);
-            $table->double('interest_rate', 8, 2);
-            $table->double('min_payment', 8, 2);
-            $table->double('fixed_payment', 8, 2);
+            $table->double('starting_balance', 13, 2);
+            $table->double('current_balance', 13, 2);
+            $table->double('interest_rate', 13, 2);
+            $table->double('min_payment', 13, 2);
+            $table->double('fixed_payment', 13, 2);
             $table->date('due_date');
             $table->integer('user_id');
             $table->timestamps();

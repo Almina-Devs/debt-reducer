@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use Illuminate\Http\Request;
 use App\Models\Loan;
+use App\Models\LoanPayment;
 use App\Models\Schedule;
 use App\Services\Calculator;
 
@@ -24,12 +25,9 @@ class SchedulesController extends Controller
     {
         $schedules = Schedule::where('user_id', Auth::user()->id)->get();
         
-        $ams = $this->calc->amortizationSchdule(1000, 0.12);
-
-        return view('schedules.index', 
+        return view('schedules.index',
             [ 
-                'schedules' => $schedules,
-                'amortizationSchedule' => $ams
+                'schedules' => $schedules
             ]
         );
     }
@@ -37,7 +35,8 @@ class SchedulesController extends Controller
     public function show(Request $request, $loanId)
     {
         $loan = Loan::where('id', $loanId)->first();
-        $ams = $this->calc->amortizationSchdule($id, $loan->starting_balance, ($loan->interest_rate / 100));
+        $ams = LoanPayment::where('loan_id', $loanId)->get(); 
+
         $details = [
             "totalNumberPayments" => count($ams),
             "payoffMonth" => $ams[count($ams)-1]["month"]

@@ -58,9 +58,9 @@ class LoansController extends Controller
             ($request->input('interest_rate') / 100)
         );
 
-        $dueDate = Carbon::parse($request->input('interest_rate'));
+        $dueDate = Carbon::parse($request->input('due_date'));
 
-        Loan::create([
+        $loan =Loan::create([
             'name' => $request->input('name'),
             'starting_balance' => $request->input('starting_balance'),
             'current_balance' => $request->input('starting_balance'),
@@ -70,6 +70,12 @@ class LoansController extends Controller
             'due_date' => $dueDate,
             'user_id' => Auth::user()->id
         ]);
+
+        $this->calc->makeAmortizationSchdule(
+            $loan->id,
+            $request->input('starting_balance'),
+            ($request->input('interest_rate') / 100)
+        );
 
         return redirect()->route('loans');
     }

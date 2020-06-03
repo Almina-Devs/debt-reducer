@@ -43,7 +43,7 @@
                         <tbody>
                             @foreach ($amortizationSchedule as $row)
                                 <tr>
-                                    <td>{{ $row["month"] }}</td>
+                                    <td>{{ $row["payment_date"] }}</td>
                                     <td>${{ $row["payment"] }}</td>
                                     <td>${{ $row["balance"] }}</td>
                                 </tr>

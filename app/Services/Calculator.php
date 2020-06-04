@@ -65,6 +65,17 @@ class Calculator
     /**
      * Undocumented function
      *
+     * @param [type] $loanId
+     * @return void
+     */
+    public function getAmortizationSchedule($loanId)
+    {
+        return LoanPayment::where('loan_id', $loanId)->get();
+    }
+
+    /**
+     * Undocumented function
+     *
      * @param [type] $amount
      * @param [type] $interest
      * @param [type] $month
@@ -104,7 +115,7 @@ class Calculator
 
         foreach($loans as $loan) {
 
-            $amSchedule = $this->amortizationSchdule($loan->starting_balance, ($loan->interest_rate / 100));
+            $amSchedule = $this->getAmortizationSchedule($loan->id);
 
             $loanDataArray = [];
 
@@ -115,13 +126,15 @@ class Calculator
                     'loan_id' => $loan->id,
                     'payment' => (double)$item['payment'],
                     'balance' => (double)$item['balance'],
-                    'payment_date' => '2020-01-01'
+                    'payment_date' => $item['payment_date'],
+                    'created_at' => Carbon::now()
                 ];
 
                 array_push($loanDataArray, $data);
 
             }
         
+            PaydownSchedule::where('loan_id', $loan->id)->delete();
             PaydownSchedule::insert($loanDataArray);
         
         }

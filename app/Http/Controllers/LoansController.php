@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Events\BuildAmortizationSchedule;
 use App\Models\Loan;
 use App\Services\Calculator;
-use Carbon\Carbon;
+
 
 class LoansController extends Controller
 {
@@ -71,11 +73,7 @@ class LoansController extends Controller
             'user_id' => Auth::user()->id
         ]);
 
-        $this->calc->makeAmortizationSchdule(
-            $loan->id,
-            $request->input('starting_balance'),
-            ($request->input('interest_rate') / 100)
-        );
+        event(new BuildAmortizationSchedule($loan->id));            
 
         return redirect()->route('loans');
     }

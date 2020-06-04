@@ -46,9 +46,9 @@ class Calculator
             
             $item = [
                 'loan_id' => $loanId,
-                'payment' => number_format($minPayment, 2, '.', ','),
+                'payment' => $minPayment,
                 'payment_date' => $startDate->year . '-' . $startDate->month . '-' . $startDate->day,
-                'balance' => number_format($amount, 2, '.', ','),
+                'balance' => $amount,
                 'created_at' => Carbon::now()
             ];
 

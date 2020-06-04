@@ -29,10 +29,11 @@ class BuildSchedule implements ShouldQueue
     public function handle(BuildAmortizationSchedule $event)
     {
         $loan = Loan::where('id', $event->loanId)->first();
+        $rate = $loan->interest_rate / 100;
         $this->calc->makeAmortizationSchdule(
             $loan->id,
             $loan->starting_balance,
-            ($loan->interest_rate / 100)
+            $rate
         );
     }
 }

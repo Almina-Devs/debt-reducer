@@ -56,11 +56,11 @@ class SchedulesController extends Controller
 
         $loans = Loan::where('user_id', Auth::user()->id)->get();
 
-        $this->calc->paydownSchedule($loans);
+        $schdule = $this->calc->paydownSchedule($loans);
 
         return view('schedules.paydown',
             [
-                'paydownSchedule' => []
+                'paydownSchedule' => $schdule
             ]
         );
 

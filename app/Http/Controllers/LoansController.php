@@ -73,7 +73,7 @@ class LoansController extends Controller
             'user_id' => Auth::user()->id
         ]);
 
-        event(new BuildAmortizationSchedule($loan->id));            
+        event(new BuildAmortizationSchedule($loan->id));
 
         return redirect()->route('loans');
     }
@@ -93,8 +93,7 @@ class LoansController extends Controller
         $this->validate($request, [
             'name' => 'required|string|max:255',
             'starting_balance' => 'required|string',
-            'interest_rate' => 'required',
-            'min_payment' => 'required'
+            'interest_rate' => 'required'
         ]);
 
         $loan = Loan::where('user_id', Auth::user()->id)
@@ -105,8 +104,10 @@ class LoansController extends Controller
         $loan->starting_balance = $request->input('starting_balance');
         $loan->current_balance = $request->input('starting_balance');
         $loan->interest_rate = $request->input('interest_rate');
-        $loan->min_payment = $request->input('min_payment');
+        $loan->schedule_ready = 0;
         $loan->save();
+
+        event(new BuildAmortizationSchedule($id));
 
         return redirect()->route('loans')->with('status', $loan->name . ' updated!');
 

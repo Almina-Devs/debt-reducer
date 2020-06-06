@@ -23,6 +23,9 @@ class Calculator
         $schdule = [];
         $startDate = Carbon::now();
         $minPaymentFloor = ($amount * .01);
+
+        // delete old schedule
+        $oldLoanPayment = LoanPayment::where('loan_id', $loanId)->delete();
         
         while ($amount > 0) {
             

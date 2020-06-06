@@ -49,20 +49,6 @@
                           </div>
                         </div>
                         <div class="form-group row">
-                          <label for="min_payment" class="col-sm-2 col-form-label">Minimum Payment</label>
-                          <div class="col-sm-4">
-                            <input type="number"
-                                   min="1"
-                                   step="any"
-                                   name="min_payment" 
-                                   class="form-control @error('min_payment') is-invalid @enderror" 
-                                   placeholder="Minimum Payment"
-                                   value="{{ $loan->min_payment }}"
-                            />
-                          </div>
-                        </div>
-                        
-                        <div class="form-group row">
                           <div class="col-sm-10">
                             <button type="submit" class="btn btn-primary">Save</button>
                           </div>

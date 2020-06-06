@@ -90,8 +90,6 @@ class Calculator
      */
     private function getMonthlyPayment($amount, $interest, $month)
     {
-        // Revolving Credit Calc
-        // (balance * rate * number of days in given month) / 365
         $daysInMonth = $month->daysInMonth;
         $payment = ($amount * $interest * $daysInMonth) / 365;
         return number_format($payment, 2, '.', ',');
@@ -115,36 +113,66 @@ class Calculator
      * @param [type] $loans
      * @return void
      */
-    public function paydownSchedule($loans)
+    public function paydownSchedule()
     {
 
         $userId = Auth::user()->id;
 
-        foreach($loans as $loan) {
+        paydownSchedule::where('user_id', $userId)->delete();
 
-            $amSchedule = $this->getAmortizationSchedule($loan->id);
+        // get all loans
+        $loans = Loan::where('user_id', $userId)->get();
 
-            $loanDataArray = [];
+        $monthlyPayment = $loans->sum('min_payment');
 
-            foreach ($amSchedule as $item) {
+        $currentBalance = $loans->sum('current_balance');
 
-                $data = [
-                    'user_id' => $userId,
-                    'loan_id' => $loan->id,
-                    'payment' => (double)$item['payment'],
-                    'balance' => (double)$item['balance'],
-                    'payment_date' => $item['payment_date'],
-                    'created_at' => Carbon::now()
-                ];
+        $avgInterest = $loans->avg('interest_rate');
 
-                array_push($loanDataArray, $data);
+        $current = Carbon::now();
 
+        $payment = $this->getMonthlyPayment($currentBalance, ($avgInterest / 100), $current);
+        
+        $interest = ($avgInterest / 100);
+
+        $minPaymentFloor = ($currentBalance * .01);
+
+        $loanDataArray = [];
+
+        while ($currentBalance > 0) {
+            
+            $current->addMonths(1);
+
+            // get monthly interest
+            $currentPayment = $this->getMonthlyPayment($currentBalance, $interest, $current);
+            
+            // add interest to loan amount
+            $currentBalance = $currentBalance + $currentPayment;
+
+            // substract min payment from amount
+            $minPayment = $this->getMinimumPayment($currentBalance, $interest);
+            $minPayment = $minPayment > $minPaymentFloor ? $minPayment : $minPaymentFloor;
+            
+            if($minPayment > $currentBalance) {
+                $currentBalance = 0;
+            } else {
+                $currentBalance = $currentBalance - $minPayment;
             }
-        
-            PaydownSchedule::where('loan_id', $loan->id)->delete();
-            PaydownSchedule::insert($loanDataArray);
-        
+            
+            $data = [
+                'user_id' => $userId,
+                'loan_id' => 0,
+                'payment' => (double)$minPayment,
+                'balance' => (double)$currentBalance,
+                'payment_date' => $current,
+                'created_at' => Carbon::now()
+            ];
+
+            array_push($loanDataArray, $data);
+
         }
+
+        PaydownSchedule::insert($loanDataArray);
 
         $paydown = PaydownSchedule::where('user_id', $userId)->get();
         

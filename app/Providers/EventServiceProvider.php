@@ -21,6 +21,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\BuildAmortizationSchedule' => [
             'App\Listeners\BuildSchedule',
         ],
+        'App\Events\BuildPaydownSchedule' => [
+            'App\Listeners\BuildPaydown',
+        ],
     ];
 
     /**

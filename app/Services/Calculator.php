@@ -58,6 +58,10 @@ class Calculator
 
         LoanPayment::insert($schdule);
 
+        $loan = Loan::where('id', $loanId)->first();
+        $loan->schedule_ready = 1;
+        $loan->save();
+
         return $schdule;
 
     }

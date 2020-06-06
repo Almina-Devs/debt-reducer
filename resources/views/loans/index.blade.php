@@ -31,9 +31,11 @@
                                         <td>{{ number_format($loan->interest_rate, 2, '.', ',') }}%</td>
                                         <td>${{ number_format($loan->min_payment, 2, '.', ',') }}</td>
                                         <td>
-                                            <a href="/schedules/{{ $loan->id }}">
-                                                <i class="far fa-calendar-alt"></i>
-                                            </a>
+                                            @if($loan->schedule_ready === 1)
+                                                <a href="/schedules/{{ $loan->id }}">
+                                                    <i class="far fa-calendar-alt"></i>
+                                                </a>
+                                            @endif
                                         </td>                                        
                                         <td>
                                             <a href="/loans/edit/{{ $loan->id }}">

@@ -22,6 +22,7 @@ class CreateLoansTable extends Migration
             $table->double('min_payment', 13, 2);
             $table->double('fixed_payment', 13, 2);
             $table->date('due_date');
+            $table->tinyInteger('schedule_ready')->default(0);
             $table->integer('user_id');
             $table->timestamps();
         });

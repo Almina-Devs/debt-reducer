@@ -26,7 +26,7 @@
                     | Starting Balance: ${{ number_format($loan->starting_balance, 2, '.', ',') }} 
                     | Rate: {{ $loan->interest_rate }} 
                     | <a href="/loans">
-                          <i class="fas fa-long-arrow-alt-left"></i>
+                          <i class="fas fa-long-arrow-alt-left"> </i> back
                       </a> 
                 </div>
     
@@ -43,14 +43,14 @@
                         <tbody>
                             @foreach ($amortizationSchedule as $row)
                                 <tr>
-                                    <td>{{ $row["payment_date"] }}</td>
-                                    <td>${{ $row["payment"] }}</td>
-                                    <td>${{ $row["balance"] }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($row["payment_date"])->format('F j, Y') }}</td>
+                                    <td>${{ number_format($row["payment"], 2, '.', ',') }}</td>
+                                    <td>${{ number_format($row["balance"], 2, '.', ',') }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
-                    
+                    {{ $amortizationSchedule->links() }}
                 </div>
 
                     </div>

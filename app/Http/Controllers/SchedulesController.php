@@ -35,7 +35,7 @@ class SchedulesController extends Controller
     public function show(Request $request, $loanId)
     {
         $loan = Loan::where('id', $loanId)->first();
-        $ams = LoanPayment::where('loan_id', $loanId)->get(); 
+        $ams = LoanPayment::where('loan_id', $loanId)->paginate(12  ); 
 
         $details = [
             "totalNumberPayments" => count($ams),

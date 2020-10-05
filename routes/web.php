@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 // PULIC
 Route::get('/', function () {
-    return view('landing');
+    return view('welcome');
 });
 
 Auth::routes();
